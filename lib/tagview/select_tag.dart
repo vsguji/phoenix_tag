@@ -1,9 +1,10 @@
 import 'dart:math';
 
-import 'package:bruno/src/theme/base/brn_text_style.dart';
-import 'package:bruno/src/theme/brn_theme_configurator.dart';
-import 'package:bruno/src/theme/configs/brn_tag_config.dart';
 import 'package:flutter/material.dart';
+import 'package:phoenix_base/phoenix.dart';
+import 'package:phoenix_tag/extension/tag_total_config.dart';
+
+import '../config/tag_config.dart';
 
 /// 选择模式的标签组合
 /// 支持流式和横向布局
@@ -11,7 +12,7 @@ import 'package:flutter/material.dart';
 /// 宽高间距可设置
 /// 支持单选和多选
 // ignore: must_be_immutable
-class BrnSelectTag extends StatefulWidget {
+class SelectTag extends StatefulWidget {
   /// 展示的标签列表
   final List<String> tags;
 
@@ -57,9 +58,9 @@ class BrnSelectTag extends StatefulWidget {
   /// 多选时的初始状态数组
   final List<bool>? initTagState;
 
-  BrnTagConfig? themeData;
+  TagConfig? themeData;
 
-  BrnSelectTag({
+  SelectTag({
     Key? key,
     required this.tags,
     this.onSelect,
@@ -81,25 +82,25 @@ class BrnSelectTag extends StatefulWidget {
     if (isSingleSelect == true) {
       assert(initTagState == null || (initTagState!.length <= 1));
     }
-    this.themeData ??= BrnTagConfig();
-    this.themeData = BrnThemeConfigurator.instance
-        .getConfig(configId: this.themeData!.configId)
+    themeData ??= TagConfig();
+    themeData = BaseThemeConfig.instance
+        .getConfig(configId: themeData!.configId)
         .tagConfig
-        .merge(this.themeData);
-    this.themeData = this.themeData!.merge(BrnTagConfig(
-        tagBackgroundColor: this.tagBackgroundColor,
-        tagTextStyle: BrnTextStyle.withStyle(this.tagTextStyle),
-        selectTagTextStyle: BrnTextStyle.withStyle(this.selectedTagTextStyle),
-        tagWidth: this.tagWidth,
-        tagHeight: this.tagHeight,
-        selectedTagBackgroundColor: this.selectedTagBackgroundColor));
+        .merge(themeData);
+    themeData = themeData!.merge(TagConfig(
+        tagBackgroundColor: tagBackgroundColor,
+        tagTextStyle: BaseTextStyle.withStyle(tagTextStyle),
+        selectTagTextStyle: BaseTextStyle.withStyle(selectedTagTextStyle),
+        tagWidth: tagWidth,
+        tagHeight: tagHeight,
+        selectedTagBackgroundColor: selectedTagBackgroundColor));
   }
 
   @override
-  _BrnSelectTagState createState() => _BrnSelectTagState();
+  _SelectTagState createState() => _SelectTagState();
 }
 
-class _BrnSelectTagState extends State<BrnSelectTag> {
+class _SelectTagState extends State<SelectTag> {
   List<bool> _tagState = [];
 
   @override
@@ -205,7 +206,7 @@ class _BrnSelectTagState extends State<BrnSelectTag> {
           borderRadius: BorderRadius.circular(widget.themeData!.tagRadius)),
       width: widget.fixWidthMode ? widget.themeData!.tagWidth : null,
       height: widget.themeData!.tagHeight,
-      padding: EdgeInsets.only(left: 8, right: 8),
+      padding: const EdgeInsets.only(left: 8, right: 8),
       child: Center(widthFactor: 1, child: tx),
     );
     return container;
@@ -220,7 +221,7 @@ class _BrnSelectTagState extends State<BrnSelectTag> {
   }
 
   @override
-  void didUpdateWidget(BrnSelectTag oldWidget) {
+  void didUpdateWidget(SelectTag oldWidget) {
     super.didUpdateWidget(oldWidget);
     // 如果两个数组不相等,重置选中状态
     if (!sameList(oldWidget.tags, widget.tags)) {
