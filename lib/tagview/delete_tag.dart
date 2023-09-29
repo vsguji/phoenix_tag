@@ -3,6 +3,7 @@ import 'package:phoenix_base/phoenix.dart';
 import 'package:phoenix_tag/extension/tag_total_config.dart';
 
 import '../config/tag_config.dart';
+import '../extension/tag_assets.dart';
 
 /// 删除模式的标签
 /// 支持下下流式和横向滑动布局
@@ -208,11 +209,10 @@ class DeleteTagItemWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(themeData!.tagRadius)),
       //删除图标
       deleteIcon: deleteIconSize != null
-          ? PhoenixTools.getAssetSizeImage(BaseAsset.iconClose,
-              deleteIconSize!.width, deleteIconSize!.height,
+          ? PhoenixTools.getAssetSizeImage(
+              Tag.iconClose, deleteIconSize!.width, deleteIconSize!.height,
               color: deleteIconColor)
-          : PhoenixTools.getAssetImageWithColor(
-              BaseAsset.iconClose, deleteIconColor),
+          : PhoenixTools.getAssetImageWithColor(Tag.iconClose, deleteIconColor),
       onDeleted: () {
         debugPrint('$index');
         didDeleted(index);
