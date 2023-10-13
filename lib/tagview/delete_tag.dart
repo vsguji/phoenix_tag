@@ -16,7 +16,7 @@ class DeleteTag extends StatefulWidget {
   final List<String>? tags;
 
   /// 标签控制器，用于主动添加和删除标签，如果使用场景只需要删除标签并进行回调可以不传控制器
-  final BrnDeleteTagController? controller;
+  final DeleteTagController? controller;
 
   /// 点击删除某个标签后的回调，参数包含
   /// 剩余的标签集合
@@ -85,13 +85,13 @@ class DeleteTag extends StatefulWidget {
 }
 
 class _DeleteTagState extends State<DeleteTag> {
-  late BrnDeleteTagController _controller;
+  late DeleteTagController _controller;
 
   @override
   void initState() {
     super.initState();
     _controller =
-        widget.controller ?? BrnDeleteTagController(initTags: widget.tags);
+        widget.controller ?? DeleteTagController(initTags: widget.tags);
   }
 
   @override
@@ -222,7 +222,7 @@ class DeleteTagItemWidget extends StatelessWidget {
 }
 
 /// 标签控制器，用于主动添加和删除标签
-class BrnDeleteTagController {
+class DeleteTagController {
   late ValueNotifier<List<String>> notifier;
 
   /// 控制器中存储的标签数据
@@ -230,7 +230,7 @@ class BrnDeleteTagController {
 
   List<String> get tags => notifier.value;
 
-  BrnDeleteTagController({List<String>? initTags}) {
+  DeleteTagController({List<String>? initTags}) {
     _tags = initTags ?? [];
     notifier = ValueNotifier(_tags);
   }

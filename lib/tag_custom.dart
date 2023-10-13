@@ -10,9 +10,9 @@ import 'package:phoenix_base/phoenix.dart';
 /// 是对Container的封装，减少边框，颜色等模版代码的开发
 ///
 /// ```dart
-/// BrnTagCustom(tagText: '标签',)
+/// TagCustom(tagText: '标签',)
 ///
-/// BrnTagCustom(tagText: '标签',backgroundColor:Colors.red)
+/// TagCustom(tagText: '标签',backgroundColor:Colors.red)
 /// ```
 ///
 class TagCustom extends StatelessWidget {
